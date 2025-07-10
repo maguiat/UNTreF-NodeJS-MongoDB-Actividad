@@ -1,0 +1,88 @@
+### -------------------------------------
+### OBTENER DATOS (GET)
+### -------------------------------------
+
+### Obtener todas las frutas
+# Devuelve un array con todas las frutas en la base de datos.
+GET http://localhost:3000/frutas
+
+### Obtener fruta por un ID válido.
+GET http://localhost:3000/frutas/6854318256f238cec3c53adc
+
+### Obtener fruta por un ID con formato inválido
+# Debería devolver un error 400 "ID inválido".
+GET http://localhost:3000/frutas/id-invalido
+
+### Obtener fruta por nombre
+# Busca "Mango" sin importar mayúsculas/minúsculas.
+GET http://localhost:3000/frutas/nombre/Mango
+
+### Obtener fruta por precio exacto
+# Busca frutas que cuesten exactamente 250.
+GET http://localhost:3000/frutas/importe/200
+
+
+### -------------------------------------
+### CREAR DATOS (POST)
+### -------------------------------------
+
+### Agregar una nueva fruta (caso de éxito)
+# Crea una nueva fruta. Debería devolver un 201 Created.
+POST http://localhost:3000/frutas
+Content-Type: application/json
+
+{
+  "nombre": "Uva",
+  "precio": 350,
+  "imagen": "🍇"
+}
+
+### Agregar una fruta con datos inválidos
+# El nombre es muy corto y el precio es negativo.
+# Debería devolver un error 400 Bad Request con los detalles de la validación.
+POST http://localhost:3000/frutas
+Content-Type: application/json
+
+{
+  "nombre": "Pi",
+  "precio": -50
+}
+
+
+### -------------------------------------
+### MODIFICAR DATOS (PATCH)
+### -------------------------------------
+
+### Modificar una fruta existente
+# NOTA: Reemplaza el ID con el de una fruta que exista (puedes usar el de la Uva que creaste antes).
+# Solo actualiza el precio. Debería devolver un 200 OK con la fruta actualizada.
+PATCH http://localhost:3000/frutas/686fcfa610cfa2ab03ac7b09
+Content-Type: application/json
+
+{
+  "precio": 375
+}
+
+### Intentar modificar una fruta que no existe
+# Debería devolver un error 404 Not Found.
+PATCH http://localhost:3000/frutas/668d7e7a5c1b2a3f4d5e6f7a
+Content-Type: application/json
+
+{
+  "precio": 999
+}
+
+
+### -------------------------------------
+### BORRAR DATOS (DELETE)
+### -------------------------------------
+
+### Borrar una fruta existente
+# NOTA: Reemplaza el ID con el de una fruta que quieras borrar.
+# Debería devolver un 204 No Content (sin cuerpo de respuesta).
+DELETE http://localhost:3000/frutas/PON_UN_ID_VALIDO_AQUI
+
+### Intentar borrar una fruta que no existe
+# Debería devolver un error 404 Not Found.
+DELETE http://localhost:3000/frutas/668d7e7a5c1b2a3f4d5e6f7b
+
